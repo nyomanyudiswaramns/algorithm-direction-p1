@@ -173,7 +173,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-blue-50 py-8 px-4 font-sans flex flex-col items-center">
+    <div className="min-h-screen bg-blue-50 py-8 px-4 font-sans flex flex-col items-center w-screen">
       {/* Header */}
       <div className="max-w-4xl w-full flex flex-col md:flex-row items-center justify-between mb-6 px-4">
         <div className="text-center md:text-left mb-4 md:mb-0">
@@ -302,9 +302,9 @@ export default function App() {
                     <span className="text-sm font-normal text-red-600">(Tolong lengkapi semua arah dan langkah!)</span>
                   </p>
                 )}
-                <button onClick={executeCode} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-full text-xl shadow-lg transition transform hover:scale-105 active:scale-95 w-full max-w-xs">
+                <div onClick={executeCode} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-full text-xl shadow-lg transition transform hover:scale-105 active:scale-95 w-full max-w-xs flex justify-center items-center cursor-pointer">
                   Run Code! 🚀
-                </button>
+                </div>
               </div>
             )}
 
@@ -318,9 +318,9 @@ export default function App() {
                 <p className="text-orange-500 font-bold text-xl mb-4 bg-orange-100 py-1 px-6 rounded-full border border-orange-300">
                   +{levelScore} Points
                 </p>
-                <button onClick={handleNextLevel} className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full text-xl shadow-lg transition transform hover:scale-105 w-full max-w-xs">
+                <div onClick={handleNextLevel} className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full text-xl shadow-lg transition transform hover:scale-105 w-full max-w-xs cursor-pointer">
                   Next Level ➡️
-                </button>
+                </div>
               </div>
             )}
 
@@ -330,9 +330,9 @@ export default function App() {
                 <p className="text-orange-500 font-bold text-xl mb-4 bg-orange-100 py-1 px-6 rounded-full border border-orange-300">
                   +{levelScore} Points
                 </p>
-                <button onClick={handleNextLevel} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-full text-xl shadow-lg transition transform hover:scale-105 w-full max-w-xs">
+                <div onClick={handleNextLevel} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-full text-xl shadow-lg transition transform hover:scale-105 w-full max-w-xs cursor-pointer">
                   Next Level ➡️
-                </button>
+                </div>
               </div>
             )}
           </div>
@@ -341,7 +341,7 @@ export default function App() {
       </div>
       
       <div className="mt-6 text-center text-gray-500 text-sm max-w-2xl px-4">
-        <p><strong>Cara Bermain:</strong> Hewan <strong>tidak boleh keluar</strong> dari jalur cokelat! Susunlah 5 instruksi secara berurutan agar hewan bisa menyusuri jalur cokelat sampai ke targetnya tanpa tersesat.</p>
+        <p><strong>How to Play:</strong> The animals <strong>must not go out</strong> of the chocolate path! Arrange 5 instructions in order so the animal can follow the chocolate path to its target without getting lost.</p>
       </div>
     </div>
   );
