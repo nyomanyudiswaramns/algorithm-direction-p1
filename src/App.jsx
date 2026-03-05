@@ -2,17 +2,29 @@ import React, { useState, useEffect, useMemo } from 'react';
 
 // Data untuk 10 level soal, diperbarui agar jalur berjarak aman (tidak mepet) 
 // sehingga WAJIB diselesaikan dengan tepat 5 instruksi tanpa jalan pintas.
+// const rawLevels = [
+//   { id: 1, char: '🐶', targetItem: '🦴', start: [0, 0], instructions: [ { dir: 'right', steps: 2 }, { dir: 'down', steps: 2 }, { dir: 'right', steps: 3 }, { dir: 'down', steps: 4 }, { dir: 'right', steps: 2 } ] },
+//   { id: 2, char: '🐰', targetItem: '🥕', start: [7, 7], instructions: [ { dir: 'left', steps: 3 }, { dir: 'up', steps: 3 }, { dir: 'left', steps: 3 }, { dir: 'up', steps: 3 }, { dir: 'right', steps: 2 } ] },
+//   { id: 3, char: '🐒', targetItem: '🍌', start: [0, 7], instructions: [ { dir: 'up', steps: 2 }, { dir: 'right', steps: 4 }, { dir: 'up', steps: 3 }, { dir: 'left', steps: 2 }, { dir: 'up', steps: 2 } ] },
+//   { id: 4, char: '🐝', targetItem: '🌻', start: [7, 0], instructions: [ { dir: 'down', steps: 3 }, { dir: 'left', steps: 4 }, { dir: 'down', steps: 3 }, { dir: 'right', steps: 3 }, { dir: 'down', steps: 1 } ] },
+//   { id: 5, char: '🐭', targetItem: '🧀', start: [1, 0], instructions: [ { dir: 'down', steps: 4 }, { dir: 'right', steps: 4 }, { dir: 'up', steps: 2 }, { dir: 'right', steps: 2 }, { dir: 'down', steps: 5 } ] },
+//   { id: 6, char: '🐸', targetItem: '🪰', start: [0, 3], instructions: [ { dir: 'right', steps: 2 }, { dir: 'up', steps: 2 }, { dir: 'right', steps: 4 }, { dir: 'down', steps: 5 }, { dir: 'left', steps: 3 } ] },
+//   { id: 7, char: '🐢', targetItem: '🥬', start: [6, 0], instructions: [ { dir: 'left', steps: 5 }, { dir: 'down', steps: 3 }, { dir: 'right', steps: 3 }, { dir: 'down', steps: 4 }, { dir: 'left', steps: 2 } ] },
+//   { id: 8, char: '🐧', targetItem: '🐟', start: [0, 4], instructions: [ { dir: 'up', steps: 3 }, { dir: 'right', steps: 4 }, { dir: 'down', steps: 4 }, { dir: 'right', steps: 3 }, { dir: 'up', steps: 2 } ] },
+//   { id: 9, char: '🐻', targetItem: '🍯', start: [2, 7], instructions: [ { dir: 'up', steps: 5 }, { dir: 'right', steps: 4 }, { dir: 'down', steps: 2 }, { dir: 'left', steps: 2 }, { dir: 'down', steps: 2 } ] },
+//   { id: 10, char: '🦄', targetItem: '🌈', start: [0, 2], instructions: [ { dir: 'down', steps: 4 }, { dir: 'right', steps: 6 }, { dir: 'up', steps: 5 }, { dir: 'left', steps: 3 }, { dir: 'down', steps: 2 } ] },
+// ];
 const rawLevels = [
-  { id: 1, char: '🐶', targetItem: '🦴', start: [0, 0], instructions: [ { dir: 'right', steps: 2 }, { dir: 'down', steps: 2 }, { dir: 'right', steps: 3 }, { dir: 'down', steps: 4 }, { dir: 'right', steps: 2 } ] },
-  { id: 2, char: '🐰', targetItem: '🥕', start: [7, 7], instructions: [ { dir: 'left', steps: 3 }, { dir: 'up', steps: 3 }, { dir: 'left', steps: 3 }, { dir: 'up', steps: 3 }, { dir: 'right', steps: 2 } ] },
-  { id: 3, char: '🐒', targetItem: '🍌', start: [0, 7], instructions: [ { dir: 'up', steps: 2 }, { dir: 'right', steps: 4 }, { dir: 'up', steps: 3 }, { dir: 'left', steps: 2 }, { dir: 'up', steps: 2 } ] },
-  { id: 4, char: '🐝', targetItem: '🌻', start: [7, 0], instructions: [ { dir: 'down', steps: 3 }, { dir: 'left', steps: 4 }, { dir: 'down', steps: 3 }, { dir: 'right', steps: 3 }, { dir: 'down', steps: 1 } ] },
-  { id: 5, char: '🐭', targetItem: '🧀', start: [1, 0], instructions: [ { dir: 'down', steps: 4 }, { dir: 'right', steps: 4 }, { dir: 'up', steps: 2 }, { dir: 'right', steps: 2 }, { dir: 'down', steps: 5 } ] },
-  { id: 6, char: '🐸', targetItem: '🪰', start: [0, 3], instructions: [ { dir: 'right', steps: 2 }, { dir: 'up', steps: 2 }, { dir: 'right', steps: 4 }, { dir: 'down', steps: 5 }, { dir: 'left', steps: 3 } ] },
-  { id: 7, char: '🐢', targetItem: '🥬', start: [6, 0], instructions: [ { dir: 'left', steps: 5 }, { dir: 'down', steps: 3 }, { dir: 'right', steps: 3 }, { dir: 'down', steps: 4 }, { dir: 'left', steps: 2 } ] },
-  { id: 8, char: '🐧', targetItem: '🐟', start: [0, 4], instructions: [ { dir: 'up', steps: 3 }, { dir: 'right', steps: 4 }, { dir: 'down', steps: 4 }, { dir: 'right', steps: 3 }, { dir: 'up', steps: 2 } ] },
-  { id: 9, char: '🐻', targetItem: '🍯', start: [2, 7], instructions: [ { dir: 'up', steps: 5 }, { dir: 'right', steps: 4 }, { dir: 'down', steps: 2 }, { dir: 'left', steps: 2 }, { dir: 'down', steps: 2 } ] },
-  { id: 10, char: '🦄', targetItem: '🌈', start: [0, 2], instructions: [ { dir: 'down', steps: 4 }, { dir: 'right', steps: 6 }, { dir: 'up', steps: 5 }, { dir: 'left', steps: 3 }, { dir: 'down', steps: 2 } ] },
+  { id: 1, char: '🐱', targetItem: '🐟', start: [1, 1], instructions: [ { dir: 'right', steps: 4 }, { dir: 'down', steps: 4 }, { dir: 'left', steps: 3 }, { dir: 'down', steps: 2 }, { dir: 'right', steps: 4 } ] },
+  { id: 2, char: '🦁', targetItem: '🥩', start: [0, 6], instructions: [ { dir: 'up', steps: 5 }, { dir: 'right', steps: 5 }, { dir: 'down', steps: 3 }, { dir: 'left', steps: 2 }, { dir: 'down', steps: 3 } ] },
+  { id: 3, char: '🐘', targetItem: '🥜', start: [7, 7], instructions: [ { dir: 'left', steps: 6 }, { dir: 'up', steps: 4 }, { dir: 'right', steps: 4 }, { dir: 'up', steps: 2 }, { dir: 'left', steps: 3 } ] },
+  { id: 4, char: '🐼', targetItem: '🎋', start: [0, 0], instructions: [ { dir: 'down', steps: 5 }, { dir: 'right', steps: 4 }, { dir: 'up', steps: 3 }, { dir: 'right', steps: 3 }, { dir: 'down', steps: 5 } ] },
+  { id: 5, char: '🦊', targetItem: '🍗', start: [6, 0], instructions: [ { dir: 'left', steps: 5 }, { dir: 'down', steps: 4 }, { dir: 'right', steps: 3 }, { dir: 'down', steps: 3 }, { dir: 'right', steps: 3 } ] },
+  { id: 6, char: '🐷', targetItem: '🍎', start: [7, 5], instructions: [ { dir: 'left', steps: 5 }, { dir: 'up', steps: 4 }, { dir: 'right', steps: 4 }, { dir: 'down', steps: 2 }, { dir: 'left', steps: 2 } ] },
+  { id: 7, char: '🐔', targetItem: '🌽', start: [0, 4], instructions: [ { dir: 'up', steps: 3 }, { dir: 'right', steps: 6 }, { dir: 'down', steps: 5 }, { dir: 'left', steps: 4 }, { dir: 'up', steps: 2 } ] },
+  { id: 8, char: '🐿️', targetItem: '🌰', start: [3, 0], instructions: [ { dir: 'down', steps: 3 }, { dir: 'left', steps: 2 }, { dir: 'down', steps: 3 }, { dir: 'right', steps: 5 }, { dir: 'up', steps: 4 } ] },
+  { id: 9, char: '🐌', targetItem: '🍃', start: [1, 6], instructions: [ { dir: 'right', steps: 5 }, { dir: 'up', steps: 5 }, { dir: 'left', steps: 4 }, { dir: 'down', steps: 3 }, { dir: 'right', steps: 2 } ] },
+  { id: 10, char: '🐉', targetItem: '💎', start: [0, 0], instructions: [ { dir: 'right', steps: 6 }, { dir: 'down', steps: 6 }, { dir: 'left', steps: 4 }, { dir: 'up', steps: 4 }, { dir: 'right', steps: 2 } ] },
 ];
 
 // Fungsi untuk mengacak urutan soal (Fisher-Yates Shuffle)
